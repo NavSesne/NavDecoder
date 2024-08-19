@@ -10,8 +10,8 @@
 #!/usr/bin/env python3
 #coding=utf-8
 import math
-from copy import copy, deepcopy
-from math import floor, sin, cos, sqrt, asin, atan2, fabs
+from copy import copy
+from math import floor
 from datetime import datetime
 A = 6378137.0
 B = 6356752.3142
@@ -60,8 +60,8 @@ def xyz2blh(x, y, z):
 
 
 def xyz2neu(x0, y0, z0, x, y, z):
-    """
-    Convert cartesian coordinate system to site-center system.
+    """Convert cartesian coordinate system to site-center system.
+
     Input paraments:
     - x0, y0, z0: coordinate of centra site,
     - x, y, z: coordinate to be converted.
@@ -80,6 +80,8 @@ def xyz2neu(x0, y0, z0, x, y, z):
           math.sin(lat) * (z - z0))
 
     return north, east, up
+
+
 
 def blh2xyz(latitude, longitude, height):
     """Convert BLH coordinates to XYZ.
@@ -116,6 +118,7 @@ def epoch2time(ep):
     time.sec = ep[5]-sec
     return time
 
+
 def gpst2utc(tgps, leaps_=-18):
     """ calculate UTC-time from gps-time """
     tutc = timeadd(tgps, leaps_)
@@ -126,6 +129,7 @@ def utc2gpst(tutc, leaps_=-18):
     tgps = timeadd(tutc, -leaps_)
     return tgps
 
+
 def timeadd(t: gtime_t, sec: float):
     """ return time added with sec """
     tr = copy(t)
@@ -135,11 +139,13 @@ def timeadd(t: gtime_t, sec: float):
     tr.sec -= tt
     return tr
 
+
 def timediff(t1: gtime_t, t2: gtime_t):
     """ return time difference """
     dt = t1.time - t2.time
     dt += (t1.sec - t2.sec)
     return dt
+
 
 def gpst2time(week, tow):
     """ convert to time from gps-time """
@@ -163,6 +169,7 @@ def gpst2datetime(week, tow):
 
 def datetime2time(tmn):
     time0=epoch2time([tmn.year, tmn.month, tmn.day, tmn.hour, tmn.minute, tmn.second])
+
     return time0
 
 def time2datetime(inp_time):
@@ -177,6 +184,7 @@ def time2gpst(t: gtime_t):
     week = int(sec/(86400*7))
     tow = sec-week*86400*7+t.sec
     return week, tow
+
 
 def time2epoch(t):
     """ convert time to epoch """
@@ -200,6 +208,7 @@ def time2epoch(t):
     ep[4] = sec % 3600//60
     ep[5] = sec % 60+t.sec
     return ep
+
 
 def time2doy(t):
     """ convert time to epoch """

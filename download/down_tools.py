@@ -12,12 +12,12 @@ from datetime import datetime
 import os
 from dateutil.relativedelta import relativedelta
 currentpath=os.path.dirname(os.path.abspath(__file__))
-root_path=os.path.dirname(currentpath)
-bin_wget=os.path.join(root_path,"bin",'wget.exe')
-bin_curl=os.path.join(root_path,"bin",'curl.exe')
-bin_gzip=os.path.join(root_path,"bin",'gzip.exe')
-bin_crx =os.path.join(root_path,"bin",'crx2rnx.exe')
-bin_gfzrnx=os.path.join(root_path,"bin",'gfzrnx_x64.exe')
+PPPRTK_path=os.path.dirname(currentpath)
+bin_wget=os.path.join(PPPRTK_path,"bin",'wget.exe')
+bin_curl=os.path.join(PPPRTK_path,"bin",'curl.exe')
+bin_gzip=os.path.join(PPPRTK_path,"bin",'gzip.exe')
+bin_crx =os.path.join(PPPRTK_path,"bin",'crx2rnx.exe')
+bin_gfzrnx=os.path.join(PPPRTK_path,"bin",'gfzrnx_x64.exe')
 
 def ymd2doy(year, mon, day):
     dn = datetime(year, mon, day, 0, 0, 0)
