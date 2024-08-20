@@ -13,12 +13,12 @@
 import datetime,os
 from dateutil.relativedelta import relativedelta
 from down_tools import *
-from download.cmn_tools import *
+from cmn_tools import *
 from concurrent.futures import ThreadPoolExecutor, as_completed
 URL_IGN = "ftp://igs.ign.fr/pub/igs/products/mgex/"
 URL_WHU = "ftp://igs.gnsswhu.cn/pub/gnss/products/mgex/"
-URL_Default = URL_WHU
 URL_CNT = "http://www.ppp-wizard.net/products/REAL_TIME/"
+URL_Default = URL_WHU
 prd_enum_set = {"IGS", "GRM", "COM", "WUM", "GFR", "WHR", "CNT"}
 def generate_filenames_and_url(center, tmn):
     # Check if the center is valid
