@@ -1,10 +1,11 @@
 """
- static test for PPP (BeiDou PPP)
+ decode the PPP-B2b products from UM980/UM982 module of Unicore 
 """
-from binascii import unhexlify
 from copy import deepcopy
 import numpy as np
-import  os
+import  os,sys
+base_path=os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(base_path,"download"))
 
 from B2b_HAS_decoder.gnss import *
 from B2b_HAS_decoder.peph import peph
@@ -14,7 +15,7 @@ from B2b_HAS_decoder.cssrlib import sCSSR, sCType, local_corr
 from datetime import datetime, timedelta
 from copy import deepcopy
 from B2b_UM980_decoder.ext124 import extract_all_pppb2binfo_content
-
+from down_PPP_products import down_PPP_data
 
 class B2BData:
     def __init__(self):
@@ -91,8 +92,6 @@ class B2BData:
 
 
 '''这里把功能合并，可以直接读取UM98的文件'''
-
-
 def read_um982_b2b_info(file_bds):
     output_file_path = file_bds+"_b2b"  # 把解码后的文件存在这里
     extract_all_pppb2binfo_content(file_bds, output_file_path)
@@ -161,20 +160,17 @@ def read_um982_b2b_info(file_bds):
 
 
 # start the batch processing
-start_date = datetime(2024, 3, 16)
-process_days = 6
-
-# start_date = datetime(2023, 12, 3)
-# process_days = 1
+start_date = datetime(2024,4, 15)
+process_days = 1
 max_orbit_delay = 300
 max_clock_delay = 30
-file_bds_template = r'D:\lewen\Work_NUIST\RTPPP_Eval\UM982_RAW\log_UM982_{}_00.txt'
-# file_bds_template = r'D:\lewen\Work_NUIST\RTPPP_Eval\B2B_CORR\SEPT{}0.23__SBF_BDSRawB2b_11_12.txt'
-nav_file_template = r'D:\lewen\Work_NUIST\RTPPP_Eval\product\BRD400DLR_S_{}0000_01D_MN.rnx'
-orb_file_template = r'D:\lewen\Work_NUIST\RTPPP_Eval\product\WUM0MGXRAP_{}0000_01D_05M_ORB.SP3'
-clk_file_template = r'D:\lewen\Work_NUIST\RTPPP_Eval\product\WUM0MGXRAP_{}0000_01D_30S_CLK.CLK'
-corr_dir_template = r'D:\lewen\Work_NUIST\RTPPP_Eval\B2B_RTCM\UM982{}_B2BRTCM'
+base_path = os.path.dirname(__file__)
+file_bds_template = os.path.join(base_path, 'test_data', 'log_UM982_{}_00.txt')
+nav_file_template = os.path.join(base_path, 'test_data', 'BRD400DLR_S_{}0000_01D_MN.rnx')
+corr_dir_template = os.path.join(base_path, 'test_data', 'UM982{}_B2BRTCM')
 
+# 1. download the precise products automatically
+down_PPP_data(start_date, process_days,"WHR", os.path.dirname(nav_file_template))
 for i in range(process_days):
     current_date = start_date + timedelta(days=i)
     ep = [current_date.year, current_date.month, current_date.day,
@@ -187,8 +183,6 @@ for i in range(process_days):
     obs_date = f"{year}{str(current_date.month).zfill(2)}{str(current_date.day).zfill(2)}"
     file_bds = file_bds_template.format(obs_date)
     nav_file = nav_file_template.format(formatted_date)
-    orb_file = orb_file_template.format(formatted_date)
-    clk_file = clk_file_template.format(formatted_date)
 
     # generate the output file
     corr_dir = corr_dir_template.format(formatted_date)
@@ -210,6 +204,8 @@ for i in range(process_days):
     cs.week = week
     cs.tow0 = tow // 86400 * 86400
     '''从文件读取读取UM982改正数'''
+    if not os.path.exists(file_bds):
+        print("correction file not found: "+file_bds)
     v = read_um982_b2b_info(file_bds)
     '''从TCP和串口读取UM982改正数'''
 
@@ -218,8 +214,6 @@ for i in range(process_days):
     nav = Nav()
     orb = peph()
     nav = rnx.decode_nav(nav_file, nav)
-    nav = orb.parse_sp3(orb_file, nav)
-    nav = rnx.decode_clk(clk_file, nav)
     nav_out = Nav()
     sp_out = peph()
 
@@ -232,11 +226,6 @@ for i in range(process_days):
     B2BData0 = B2BData()
     delay = 0
     for row in v:
-        # if row['tow']>=tow or row['tow']<tow-120:
-        #     continue
-        # print(row)
-        # corr_str = np.array2string(row, separator=', ')
-        # cs.log_msg(corr_str)
         buff = row
         cs.decode_cssr(buff)
         intervals = 5
