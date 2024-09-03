@@ -29,8 +29,6 @@ def extract_data_from_line1(line):
 
     return f'{type} week:{week} wn:{wn} prn:{prn} iodssr:{iodssr} iodp:{iodp} todbdt:{todbdt} BDS:{bds} GPS:{gps} Galileo:{galileo} GLONASS:{glonass}\n'
 
-
-
 def extract_data_from_line2(line):
     parts = line.split(',')
     if len(parts) < 56:  # 确保每行有足够的数据
@@ -55,11 +53,6 @@ def extract_data_from_line2(line):
         result += f' satslot:{satslot} iodn:{iodn} Rorb:{Rorb:.4f} Aorb:{Aorb:.4f} Corb:{Corb:.4f} iodcorr:{iodcorr} URAI:{URAI}'
 
     return result + '\n'
-
-
-
-
-
 
 def extract_data_from_line4(line):
     parts = line.split(',')

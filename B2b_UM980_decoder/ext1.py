@@ -1,3 +1,4 @@
+
 def extract_data_from_line(line):
     # 将每一行按逗号分割
     parts = line.split(',')
