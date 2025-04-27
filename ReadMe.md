@@ -91,6 +91,19 @@ This repository provides download links for the PPP-B2b and Galileo HAS SSR corr
 
 ---
 
+### **SEPT RAW files**
+
+- **Download Link:** [Baidu Netdisk]( https://pan.baidu.com/s/1d-a8jYOrjOwgWNmt5PqWmQ)  
+- **Extraction Code:** `h3cf`
+
+---
+
+### **UM98 RAW files**
+
+- **Download Link:** [Baidu Netdisk](https://pan.baidu.com/s/1zZNejuNJoinoNzsq8-6pMA )  
+- **Extraction Code:** `nft7`
+
+---
 ## How to Access
 
 1. Click on the provided Baidu Netdisk download links.
