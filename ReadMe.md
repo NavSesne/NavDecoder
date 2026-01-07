@@ -18,6 +18,7 @@ We would like to thank Xiaokun Duan (Chuzhou University) for providing the code 
 
 Files shared via Baidu Netdisk: BDS_B2b_SP3_CLK
 Link: https://pan.baidu.com/s/14yh62-EAVPcddLMn9s3zQg
+Access code (extraction code): gnss
 
 ### Main Functions
 
