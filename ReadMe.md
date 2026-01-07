@@ -11,11 +11,10 @@ This Python toolbox is designed for **BDS PPP-B2b** and **Galileo HAS decoding**
 5. **Capability to save corrections** in **SP3** and **CLK formats**.
 6. **Provision of an archive** for **B2b** and **HAS corrections**.
 
-### update 2026/02/07
+### update 2026/01/07
 Considering that many readers are interested in SP3- and CLK-format products, we generated standard SP3 and CLK files during our processing pipeline and performed preliminary tests. Interested readers can download them from the link below.
-
+Historical archived products will be updated in this directory
 We would like to thank Xiaokun Duan (Chuzhou University) for providing the code to extract and generate precise ephemeris (SP3) and precise clock (CLK) files from the orbit/clock evaluation logs.
-
 Files shared via Baidu Netdisk: BDS_B2b_SP3_CLK
 Link: https://pan.baidu.com/s/14yh62-EAVPcddLMn9s3zQg
 Access code (extraction code): gnss
